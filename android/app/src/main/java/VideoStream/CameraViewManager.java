@@ -5,12 +5,14 @@ import android.widget.Toast;
 
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.annotations.ReactProp;
 
 import javax.annotation.Nonnull;
 
 public class CameraViewManager extends SimpleViewManager<CameraView> {
-    Context context;
+    ThemedReactContext context;
     static CameraView cameraView;
+    static String streaUrl;
     @Override
     public String getName() {
         return "VideoView";
@@ -19,12 +21,18 @@ public class CameraViewManager extends SimpleViewManager<CameraView> {
     @Override
     protected CameraView createViewInstance(ThemedReactContext reactContext) {
         this.context = reactContext;
-        cameraView = new CameraView(reactContext);
+        cameraView = new CameraView(reactContext, reactContext.getCurrentActivity());
         return cameraView;
     }
+
+    @ReactProp(name = "url")
+    public void url(CameraView cameraView, String streamURL) {
+        streaUrl = streamURL;
+    }
+
     public static void startCall(){
         if(cameraView != null){
-            CameraView.start();
+            CameraView.start(streaUrl);
         }
     }
 

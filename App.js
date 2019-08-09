@@ -1,93 +1,27 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  NativeModules,
-  TouchableOpacity,
-  Alert,
-  requireNativeComponent
-} from "react-native";
-
-const CameraComponet = requireNativeComponent("VideoView", null);
-
-const { VideoComponent } = NativeModules;
+import React, { Component } from 'react';
+import { SafeAreaView, Alert } from 'react-native';
+import Main from './Main';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isChange: false,
-      isCameraStart: false,
-      isCameraStop: true
-    };
-  }
-  componentDidMount() {}
-
-  changeCamera = () => {
-    VideoComponent.changeCamera();
+  onPressStart = () => {
+    Alert.alert("Start call");
   };
-
-  startCamera = () => {
-    VideoComponent.startCamera();
+  onPressStop = () => {
+    Alert.alert("Stop call");
   };
-
-  stopCamera = () => {
-    VideoComponent.stopCamera();
+  onChangeCamera = () => {
+    Alert.alert('Change Camera Call');
   };
-
-  onStartCamera = event => {
-    if (event.nativeEvent.Start_Success) {
-      Alert.alert('Start Streaming ');
-    } else if (event.nativeEvent.Start_error) {
-      Alert.alert('Stop Streaming ');
-    } else if (event.nativeEvent.Stop_Success) {
-      Alert.alert('Stop Streaming ');
-    }
-  };
-
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <CameraComponet
-          style={{ flex: 1 }}
-          //   changeCamara={this.state.isChange}
-          //   startCamera={this.state.isCameraStart}
-          //   stopCamera={this.state.isCameraStop}
-          //   onChange={this.onStartCamera}
+      <SafeAreaView style={{ flex: 1 }}>
+        <Main
+          streamURL={"rtmp://rtmp.streamaxia.com/streamaxia/VideoStream"}
+          onPressStart={this.onPressStart}
+          onPressStop={this.onPressStop}
+          onChangeCamera={this.onChangeCamera}
         />
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            bottom: 20,
-            width: 150,
-            backgroundColor: "white"
-          }}
-          onPress={this.changeCamera}
-        >
-          <Text style={{ textAlign: "center" }}>Change Camera</Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "column",
-            position: "absolute",
-            top: 10,
-            left: 10
-          }}
-        >
-          <TouchableOpacity
-            style={{ height: 30, backgroundColor: "white" }}
-            onPress={this.startCamera}
-          >
-            <Text style={{ textAlign: "center" }}>Start Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.stopCamera}
-            style={{ height: 30, backgroundColor: "white", marginTop: 20 }}
-          >
-            <Text style={{ textAlign: "center" }}>Stop Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

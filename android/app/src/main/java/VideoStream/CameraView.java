@@ -1,7 +1,12 @@
 package VideoStream;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -10,6 +15,8 @@ import android.widget.Toast;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -32,15 +39,16 @@ import java.util.List;
 
 public class CameraView extends RelativeLayout implements EncoderHandler.EncodeListener, RtmpHandler.RtmpListener, RecordHandler.RecordListener {
 
-    static Context context;
+    static ThemedReactContext context;
     View view;
     CameraPreview cameraPreview;
     private static StreamaxiaPublisher mPublisher;
+    private Context mContext;
 
-
-    public CameraView(Context context) {
+    public CameraView(ThemedReactContext context, Activity mContext) {
         super(context);
         this.context = context;
+        this.mContext = mContext;
         Dexter.initialize(getContext());
         checkPermissions();
 //        init();
@@ -65,7 +73,7 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
     public void init() {
         view = inflate(getContext(), R.layout.videoview, this);
         cameraPreview = (CameraPreview) findViewById(R.id.preview);
-        mPublisher = new StreamaxiaPublisher(cameraPreview, context);
+        mPublisher = new StreamaxiaPublisher(cameraPreview, mContext);
         mPublisher.setEncoderHandler(new EncoderHandler(this));
         mPublisher.setRtmpHandler(new RtmpHandler(this));
         mPublisher.setRecordEventHandler(new RecordHandler(this));
@@ -80,24 +88,44 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
         mPublisher.setVideoOutputResolution(resolution.width, resolution.height, this.getResources().getConfiguration().orientation);
     }
 
-    public static void start(){
-        Toast.makeText(context, "Start", Toast.LENGTH_SHORT).show();
+    public static void start(String streaUrl) {
+        Log.e("stream url ", " url => " + streaUrl );
+        try {
+            mPublisher.startPublish(streaUrl);
+            WritableMap payload = Arguments.createMap();
+            payload.putString("start_parameter", "Start call");
+            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit("onStart", payload);
+            Toast.makeText(context, "Stream is Started", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("start_stream", "Start Stream Error => " + e.getMessage());
+        }
     }
 
-    public static void change(){
+    public static void change() {
         mPublisher.switchCamera();
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("ChangeCamera", payload);
     }
 
     public static void stop() {
         Toast.makeText(context, "Stop", Toast.LENGTH_SHORT).show();
+        mPublisher.stopPublish();
+        WritableMap payload = Arguments.createMap();
+        payload.putString("Stop_parameter", "Stop call");
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onStop", payload);
     }
 
     @Override
     public void onNetworkWeak() {
+        Log.e("Error", "onNetworkWeak ====>");
     }
 
     @Override
     public void onNetworkResume() {
+        Log.e("Error", "onNetworkResume ====>");
     }
 
     @Override
@@ -116,49 +144,47 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
 
     @Override
     public void onRtmpConnecting(String s) {
-
+        Log.e("Error", " onRtmpConnecting====>");
     }
 
     @Override
     public void onRtmpConnected(String s) {
-//        WritableMap event = Arguments.createMap();
-//        event.putString("Start_Success", "Stream started success");
-//        themedReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(videoview.getId(), "topChange", event);
+        Log.e("Error", "onRtmpConnected ====>");
     }
 
     @Override
     public void onRtmpVideoStreaming() {
-
+        Log.e("Error", "onRtmpVideoStreaming ====>");
     }
 
     @Override
     public void onRtmpAudioStreaming() {
-
+//        Log.e("Error"," onRtmpAudioStreaming====>");
     }
 
     @Override
     public void onRtmpStopped() {
-
+        Log.e("Error", "onRtmpStopped ====>");
     }
 
     @Override
     public void onRtmpDisconnected() {
-
+        Log.e("Error", " onRtmpDisconnected====>");
     }
 
     @Override
     public void onRtmpVideoFpsChanged(double v) {
-
+        Log.e("Error", "onRtmpVideoFpsChanged ====>");
     }
 
     @Override
     public void onRtmpVideoBitrateChanged(double v) {
-
+        Log.e("Error", "onRtmpVideoBitrateChanged ====>");
     }
 
     @Override
     public void onRtmpAudioBitrateChanged(double v) {
-
+//        Log.e("Error","onRtmpAudioBitrateChanged ====>");
     }
 
     @Override
@@ -183,17 +209,20 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
 
     @Override
     public void onRtmpAuthenticationg(String s) {
-
+        Log.e("Error", " onRtmpAuthenticationg====>");
     }
 
     @Override
     public void onRecordPause() {
-
+        Log.e("Error", "onRecordPause ====>");
     }
 
     @Override
     public void onRecordResume() {
-
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRecordResume_perameter", "onRecordResume");
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRecordResume", payload);
     }
 
     @Override
@@ -203,7 +232,7 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
 
     @Override
     public void onRecordFinished(String s) {
-
+        Log.e("Error", "onRecordFinished ====>");
     }
 
     @Override
