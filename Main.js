@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
-import {
+import React, { Component } from "react";
+import ReactNative, {
   View,
   SafeAreaView,
   Text,
   TouchableOpacity,
   Alert,
-  Image
-} from 'react-native';
-import { DeviceEventEmitter } from 'react-native';
-import PropTypes from 'prop-types';
+  Image,
+  Platform,
+  NativeModules,
+  findNodeHandle
+} from "react-native";
+const { VideoComponentManager } = NativeModules;
+import { DeviceEventEmitter } from "react-native";
+import PropTypes from "prop-types";
 
 import CameraComponet from "./CameraComponent";
 import VideoComponent from "./VideoComponent";
@@ -19,7 +23,7 @@ export default class Main extends Component {
     this.state = {
       isChange: false,
       isCameraStart: false,
-      isCameraStop: true,
+      isCameraStop: true
     };
     DeviceEventEmitter.addListener("onStart", event => {
       this.onStartStream(event);
@@ -34,15 +38,40 @@ export default class Main extends Component {
   componentDidMount() {}
 
   changeCamera = () => {
-    VideoComponent.changeCamera(); /// call native module method
+    if (Platform.OS === "ios") {
+      NativeModules.VideoComponentManager.changeCamera(
+        findNodeHandle(this.liveStream)
+      ); /// call native module method
+    } else {
+      VideoComponent.changeCamera(); /// call native module method
+    }
   };
 
   startCamera = () => {
-    VideoComponent.startCamera(); // call native module method
+    if (Platform.OS === "ios") {
+      VideoComponentManager.startStream(
+        ReactNative.findNodeHandle(this.liveStream),
+        (error, message) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(message);
+          }
+        }
+      ); /// call native module method
+    } else {
+      VideoComponent.startCamera(); // call native module method
+    }
   };
 
   stopCamera = () => {
-    VideoComponent.stopCamera(); /// call native module method
+    if (Platform.OS === "ios") {
+      NativeModules.VideoComponentManager.stopStream(
+        ReactNative.findNodeHandle(this.liveStream)
+      );
+    } else {
+      VideoComponent.stopCamera(); /// call native module method
+    }
   };
 
   onChangeCamera = () => {
@@ -57,10 +86,26 @@ export default class Main extends Component {
     this.props.onPressStop();
   };
 
+  setRef = ref => {
+    this.liveStream = ref;
+  };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <CameraComponet style={{ flex: 1 }} streamURL={this.props.streamURL} />
+        {Platform.OS === "ios" ? (
+          <VideoComponent
+            ref={this.setRef}
+            style={{ flex: 1, backgroundColor: "red" }}
+            streamURL={this.props.streamURL}
+          />
+        ) : (
+          <CameraComponet
+            style={{ flex: 1 }}
+            streamURL={this.props.streamURL}
+          />
+        )}
+
         <TouchableOpacity
           style={{
             position: "absolute",
@@ -81,23 +126,23 @@ export default class Main extends Component {
         </TouchableOpacity>
         <View
           style={{
-            flexDirection: 'column',
-            position: 'absolute',
+            flexDirection: "column",
+            position: "absolute",
             top: 10,
-            left: 10,
+            left: 10
           }}
         >
           <TouchableOpacity
-            style={{ height: 30, backgroundColor: 'white' }}
+            style={{ height: 30, backgroundColor: "white" }}
             onPress={this.startCamera}
           >
-            <Text style={{ textAlign: 'center' }}>Start Stream</Text>
+            <Text style={{ textAlign: "center" }}>Start Stream</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.stopCamera}
-            style={{ height: 30, backgroundColor: 'white', marginTop: 20 }}
+            style={{ height: 30, backgroundColor: "white", marginTop: 20 }}
           >
-            <Text style={{ textAlign: 'center' }}>Stop Stream</Text>
+            <Text style={{ textAlign: "center" }}>Stop Stream</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -108,5 +153,5 @@ export default class Main extends Component {
 Main.propsTypes = {
   onPressStart: PropTypes.func,
   onPressStop: PropTypes.func,
-  onChangeCamera: PropTypes.func,
+  onChangeCamera: PropTypes.func
 };

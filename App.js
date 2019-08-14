@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { SafeAreaView, Alert } from 'react-native';
-import Main from './Main';
+import React, { Component } from "react";
+import { SafeAreaView, Alert } from "react-native";
+import Main from "./Main";
 
 export default class App extends Component {
   onPressStart = () => {
@@ -10,7 +10,7 @@ export default class App extends Component {
     Alert.alert("Stop call");
   };
   onChangeCamera = () => {
-    Alert.alert('Change Camera Call');
+    Alert.alert("Change Camera Call");
   };
   render() {
     return (

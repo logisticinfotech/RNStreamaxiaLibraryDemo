@@ -18,6 +18,12 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* videoStripDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* videoStripDemoTests.m */; };
 		62F63962AEABA8021EB143BC /* libPods-videoStripDemo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBC5C8A3482F6F579B6B68C /* libPods-videoStripDemo-tvOSTests.a */; };
+		7D7C493E22FD7B980019753D /* VideoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C493D22FD7B980019753D /* VideoComponent.swift */; };
+		7D7C494222FD7C050019753D /* VideoComponentModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C494122FD7C050019753D /* VideoComponentModule.m */; };
+		7D7C494422FD7DA00019753D /* VideoComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7C494322FD7DA00019753D /* VideoComponentManager.swift */; };
+		7D7C494B22FD7F890019753D /* demo-certificate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D7C494922FD7F880019753D /* demo-certificate.bundle */; };
+		7D7C494C22FD83D90019753D /* StreamaxiaSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7C494722FD7F880019753D /* StreamaxiaSDK.framework */; };
+		7D7C494D22FD83D90019753D /* StreamaxiaSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7C494722FD7F880019753D /* StreamaxiaSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1F2976415FCFDECAACC1886 /* libPods-videoStripDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2495927C75A9BC68E53F1D3B /* libPods-videoStripDemoTests.a */; };
 		FFFAD3CBFF60F6F67016B175 /* libPods-videoStripDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87ED2E20D5A8D9F73E8F0806 /* libPods-videoStripDemo.a */; };
 /* End PBXBuildFile section */
@@ -39,6 +45,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7D7C494E22FD83D90019753D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7D7C494D22FD83D90019753D /* StreamaxiaSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* videoStripDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = videoStripDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +76,12 @@
 		29827B50465B65B6B18BCE4B /* Pods-videoStripDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-videoStripDemoTests.release.xcconfig"; path = "Target Support Files/Pods-videoStripDemoTests/Pods-videoStripDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* videoStripDemo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "videoStripDemo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* videoStripDemo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "videoStripDemo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D7C493C22FD7B980019753D /* videoStripDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "videoStripDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		7D7C493D22FD7B980019753D /* VideoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoComponent.swift; sourceTree = "<group>"; };
+		7D7C494122FD7C050019753D /* VideoComponentModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoComponentModule.m; sourceTree = "<group>"; };
+		7D7C494322FD7DA00019753D /* VideoComponentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoComponentManager.swift; sourceTree = "<group>"; };
+		7D7C494722FD7F880019753D /* StreamaxiaSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = StreamaxiaSDK.framework; sourceTree = "<group>"; };
+		7D7C494922FD7F880019753D /* demo-certificate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "demo-certificate.bundle"; sourceTree = "<group>"; };
 		7EBC5C8A3482F6F579B6B68C /* libPods-videoStripDemo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-videoStripDemo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87ED2E20D5A8D9F73E8F0806 /* libPods-videoStripDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-videoStripDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FA56AF7D78C524375B63491 /* libPods-videoStripDemo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-videoStripDemo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFFAD3CBFF60F6F67016B175 /* libPods-videoStripDemo.a in Frameworks */,
+				7D7C494C22FD83D90019753D /* StreamaxiaSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,8 +188,44 @@
 				0A88892A0BE9C98250A50ECF /* Pods-videoStripDemoTests.debug.xcconfig */,
 				29827B50465B65B6B18BCE4B /* Pods-videoStripDemoTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7D7C493B22FD7B6C0019753D /* VideoComponent */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C494522FD7F880019753D /* Resources */,
+				7D7C493D22FD7B980019753D /* VideoComponent.swift */,
+				7D7C493C22FD7B980019753D /* videoStripDemo-Bridging-Header.h */,
+				7D7C494122FD7C050019753D /* VideoComponentModule.m */,
+				7D7C494322FD7DA00019753D /* VideoComponentManager.swift */,
+			);
+			path = VideoComponent;
+			sourceTree = "<group>";
+		};
+		7D7C494522FD7F880019753D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C494622FD7F880019753D /* Framework */,
+				7D7C494822FD7F880019753D /* Streamaxia */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7D7C494622FD7F880019753D /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C494722FD7F880019753D /* StreamaxiaSDK.framework */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		7D7C494822FD7F880019753D /* Streamaxia */ = {
+			isa = PBXGroup;
+			children = (
+				7D7C494922FD7F880019753D /* demo-certificate.bundle */,
+			);
+			path = Streamaxia;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -175,6 +238,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7D7C493B22FD7B6C0019753D /* VideoComponent */,
 				13B07FAE1A68108700A75B9A /* videoStripDemo */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* videoStripDemoTests */,
@@ -230,6 +294,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				7D7C494E22FD83D90019753D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -290,15 +355,24 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = JMUSN4CCGB;
+						ProvisioningStyle = Manual;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = JMUSN4CCGB;
+						LastSwiftMigration = 1010;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = JMUSN4CCGB;
+						ProvisioningStyle = Manual;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = JMUSN4CCGB;
+						ProvisioningStyle = Manual;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
 				};
@@ -337,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				7D7C494B22FD7F890019753D /* demo-certificate.bundle in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,7 +604,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				7D7C493E22FD7B980019753D /* VideoComponent.swift in Sources */,
+				7D7C494222FD7C050019753D /* VideoComponentModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				7D7C494422FD7DA00019753D /* VideoComponentManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +660,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0A88892A0BE9C98250A50ECF /* Pods-videoStripDemoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -605,6 +684,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 29827B50465B65B6B18BCE4B /* Pods-videoStripDemoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = videoStripDemoTests/Info.plist;
@@ -626,8 +706,16 @@
 			baseConfigurationReference = 9DD3941C1A1858D971C9170D /* Pods-videoStripDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = JMUSN4CCGB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/VideoComponent/Resources/Framework",
+				);
 				INFOPLIST_FILE = videoStripDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -635,8 +723,12 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.streamVideo.liveStream;
 				PRODUCT_NAME = videoStripDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoComponent/videoStripDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -646,7 +738,15 @@
 			baseConfigurationReference = B988046F0275E5F3C3B4BEEF /* Pods-videoStripDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JMUSN4CCGB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/VideoComponent/Resources/Framework",
+				);
 				INFOPLIST_FILE = videoStripDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -654,8 +754,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.streamVideo.liveStream;
 				PRODUCT_NAME = videoStripDemo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoComponent/videoStripDemo-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -797,8 +900,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = JMUSN4CCGB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -850,8 +956,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = JMUSN4CCGB;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
