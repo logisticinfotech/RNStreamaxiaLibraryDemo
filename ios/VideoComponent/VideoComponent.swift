@@ -16,6 +16,8 @@ import AVKit
 
 class VideoComponent: UIView {
   
+  var onChange: RCTBubblingEventBlock?
+  
   
   /// The recorder
   fileprivate var recorder: AXRecorder!
@@ -55,6 +57,10 @@ class VideoComponent: UIView {
   func startStreaming(resolver streamResult:@escaping ((Bool,String)->Void)) {
     self.recordView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     self .addSubview(self.recordView)
+    
+    if onChange != nil {
+      onChange!(["nativeObject": "Test"])
+    }
     
     DispatchQueue.global(qos: .background).async {
       let sdk = AXStreamaxiaSDK.sharedInstance()!

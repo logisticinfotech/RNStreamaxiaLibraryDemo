@@ -16,5 +16,6 @@ RCT_EXPORT_VIEW_PROPERTY(streamURL, NSString)
 RCT_EXTERN_METHOD(stopStream:(nonnull NSNumber *)node)
 RCT_EXTERN_METHOD(changeCamera:(nonnull NSNumber *)node)
 RCT_EXTERN_METHOD(startStream:(nonnull NSNumber *)node : (RCTResponseSenderBlock)callback)
+RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 
 @end

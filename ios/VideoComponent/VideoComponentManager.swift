@@ -10,6 +10,8 @@ import UIKit
 
 @objc (VideoComponentManager)
 class VideoComponentManager: RCTViewManager {
+  
+ 
 
   override func view() -> UIView? {
     return VideoComponent()

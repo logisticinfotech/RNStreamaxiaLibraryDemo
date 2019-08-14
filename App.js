@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { SafeAreaView, Alert } from "react-native";
 import Main from "./Main";
-
 export default class App extends Component {
   onPressStart = () => {
     Alert.alert("Start call");

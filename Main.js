@@ -90,6 +90,15 @@ export default class Main extends Component {
     this.liveStream = ref;
   };
 
+  // setText = event => {
+  //   // console.log("NAtive Text : ", event.nativeEvent.nativeObject);
+  //   console.log("NAtive Text : ", event);
+  // };
+
+  handleCallback(event) {
+    console.log(event.nativeEvent.nativeObject); // "data sent from native"
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -98,6 +107,7 @@ export default class Main extends Component {
             ref={this.setRef}
             style={{ flex: 1, backgroundColor: "red" }}
             streamURL={this.props.streamURL}
+            onChange={() => {}}
           />
         ) : (
           <CameraComponet
@@ -153,5 +163,6 @@ export default class Main extends Component {
 Main.propsTypes = {
   onPressStart: PropTypes.func,
   onPressStop: PropTypes.func,
-  onChangeCamera: PropTypes.func
+  onChangeCamera: PropTypes.func,
+  onChange: PropTypes.func
 };
