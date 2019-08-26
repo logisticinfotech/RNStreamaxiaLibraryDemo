@@ -51,7 +51,6 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
         this.mContext = mContext;
         Dexter.initialize(getContext());
         checkPermissions();
-//        init();
     }
 
     private void checkPermissions() {
@@ -121,11 +120,17 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
     @Override
     public void onNetworkWeak() {
         Log.e("Error", "onNetworkWeak ====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onNetworkWeak", payload);
     }
 
     @Override
     public void onNetworkResume() {
         Log.e("Error", "onNetworkResume ====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onNetworkResume", payload);
     }
 
     @Override
@@ -134,57 +139,93 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
     }
 
     private void handleException(Exception e) {
-        try {
-            Log.e("Error => ", "Error  ========> " + e.getMessage());
-            mPublisher.stopPublish();
-        } catch (Exception e1) {
-            Log.e("Error => ", "Error  ========> " + e1.getMessage());
-        }
+//        try {
+//            Log.e("Error => ", "Error  ========> " + e.getMessage());
+////            mPublisher.stopPublish();
+//        } catch (Exception e1) {
+//            Log.e("Error => ", "Error  ========> " + e1.getMessage());
+//        }
+        WritableMap payload = Arguments.createMap();
+        payload.putString("handleException", e.getMessage());
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("handleException", payload);
     }
 
     @Override
     public void onRtmpConnecting(String s) {
-        Log.e("Error", " onRtmpConnecting====>");
+        Log.e("Error", " onRtmpConnecting====> " + s);
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpConnecting", s);
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpConnecting", payload);
     }
 
     @Override
     public void onRtmpConnected(String s) {
-        Log.e("Error", "onRtmpConnected ====>");
+        Log.e("error","onRtmpConnected ===> " + s);
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpConnected", s);
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpConnected", payload);
     }
 
     @Override
     public void onRtmpVideoStreaming() {
         Log.e("Error", "onRtmpVideoStreaming ====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpVideoStreaming", payload);
     }
 
     @Override
     public void onRtmpAudioStreaming() {
-//        Log.e("Error"," onRtmpAudioStreaming====>");
+        Log.e("Error"," onRtmpAudioStreaming====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpAudioStreaming", payload);
     }
 
     @Override
     public void onRtmpStopped() {
         Log.e("Error", "onRtmpStopped ====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpStopped", payload);
     }
 
     @Override
     public void onRtmpDisconnected() {
         Log.e("Error", " onRtmpDisconnected====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpDisconnected", payload);
     }
 
     @Override
     public void onRtmpVideoFpsChanged(double v) {
         Log.e("Error", "onRtmpVideoFpsChanged ====>");
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpVideoFpsChanged",  String.valueOf(v));
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpVideoFpsChanged", payload);
     }
 
     @Override
     public void onRtmpVideoBitrateChanged(double v) {
         Log.e("Error", "onRtmpVideoBitrateChanged ====>");
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpVideoBitrateChanged",  String.valueOf(v));
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpVideoBitrateChanged", payload);
     }
 
     @Override
     public void onRtmpAudioBitrateChanged(double v) {
-//        Log.e("Error","onRtmpAudioBitrateChanged ====>");
+        Log.e("Error","onRtmpAudioBitrateChanged ====>");
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpAudioBitrateChanged",  String.valueOf(v));
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpAudioBitrateChanged", payload);
     }
 
     @Override
@@ -209,12 +250,19 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
 
     @Override
     public void onRtmpAuthenticationg(String s) {
-        Log.e("Error", " onRtmpAuthenticationg====>");
+        Log.e("Error", " onRtmpAuthenticationg====> " + s);
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRtmpAuthenticationg",  s);
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRtmpAuthenticationg", payload);
     }
 
     @Override
     public void onRecordPause() {
         Log.e("Error", "onRecordPause ====>");
+        WritableMap payload = Arguments.createMap();
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRecordPause", payload);
     }
 
     @Override
@@ -227,12 +275,20 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
 
     @Override
     public void onRecordStarted(String s) {
-        Toast.makeText(context, "onRecored started => " + s, Toast.LENGTH_SHORT).show();
+        Log.e("error","onRecordStarted ===> " + s);
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRecordStarted",  s);
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRecordStarted", payload);
     }
 
     @Override
     public void onRecordFinished(String s) {
-        Log.e("Error", "onRecordFinished ====>");
+        Log.e("Error", "onRecordFinished ====> " + s);
+        WritableMap payload = Arguments.createMap();
+        payload.putString("onRecordFinished",  s);
+        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onRecordFinished", payload);
     }
 
     @Override

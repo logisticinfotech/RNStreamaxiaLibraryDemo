@@ -34,6 +34,54 @@ export default class Main extends Component {
     DeviceEventEmitter.addListener("ChangeCamera", () => {
       this.onChangeCamera();
     });
+    DeviceEventEmitter.addListener("onRtmpConnected", message => {
+      this.onRtmpConnected(message.onRtmpConnected);
+    });
+    DeviceEventEmitter.addListener("onNetworkWeak", () => {
+      this.onNetworkWeak();
+    });
+    DeviceEventEmitter.addListener("onNetworkResume", () => {
+      this.onNetworkResume();
+    });
+    DeviceEventEmitter.addListener("onRtmpConnecting", connectingMessage => {
+      this.onRtmpConnecting(connectingMessage.onRtmpConnecting);
+    });
+    DeviceEventEmitter.addListener("onRtmpVideoStreaming", () => {
+      this.onRtmpVideoStreaming();
+    });
+    DeviceEventEmitter.addListener("onRtmpAudioStreaming", () => {
+      this.onRtmpAudioStreaming();
+    });
+    DeviceEventEmitter.addListener("onRtmpStopped", () => {
+      this.onRtmpStopped();
+    });
+    DeviceEventEmitter.addListener("onRtmpDisconnected", () => {
+      this.onRtmpDisconnected();
+    });
+    DeviceEventEmitter.addListener("onRtmpVideoFpsChanged", value => {
+      this.onRtmpVideoFpsChanged(value.onRtmpVideoFpsChanged);
+    });
+    DeviceEventEmitter.addListener("onRtmpVideoBitrateChanged", value => {
+      this.onRtmpVideoBitrateChanged(value.onRtmpVideoBitrateChanged);
+    });
+    DeviceEventEmitter.addListener("onRtmpAudioBitrateChanged", value => {
+      this.onRtmpAudioBitrateChanged(value.onRtmpAudioBitrateChanged);
+    });
+    DeviceEventEmitter.addListener("onRtmpAuthenticationg", value => {
+      this.onRtmpAuthenticationg(value.onRtmpAuthenticationg);
+    });
+    DeviceEventEmitter.addListener("onRecordPause", () => {
+      this.onRecordPause(value);
+    });
+    DeviceEventEmitter.addListener("onRecordStarted", value => {
+      this.onRecordStarted(value.onRecordStarted);
+    });
+    DeviceEventEmitter.addListener("onRecordFinished", value => {
+      this.onRecordFinished(value.onRecordFinished);
+    });
+    DeviceEventEmitter.addListener("handleException", value => {
+      this.handleException(value.handleException);
+    });
   }
   componentDidMount() {}
 
@@ -74,6 +122,60 @@ export default class Main extends Component {
     }
   };
 
+  onRtmpVideoStreaming = () => {
+    this.props.onRtmpVideoStreaming();
+  };
+
+  onRtmpConnected = message => {
+    this.props.onRtmpConnected(message);
+  };
+
+  onNetworkWeak = () => {
+    this.props.onNetworkWeak();
+  };
+
+  onNetworkResume = () => {
+    this.props.onNetworkResume();
+  };
+
+  onRtmpConnecting = connectingMessage => {
+    this.props.onRtmpConnecting(connectingMessage);
+  };
+
+  onRtmpAudioStreaming = () => {
+    this.props.onRtmpAudioStreaming();
+  };
+
+  onRtmpStopped = () => {
+    this.props.onRtmpStopped();
+  };
+  onRtmpDisconnected = () => {
+    this.props.onRtmpDisconnected();
+  };
+  onRtmpVideoFpsChanged = value => {
+    this.props.onRtmpVideoFpsChanged(value);
+  };
+  onRtmpVideoBitrateChanged = value => {
+    this.props.onRtmpVideoBitrateChanged(value);
+  };
+  onRtmpAudioBitrateChanged = value => {
+    this.props.onRtmpAudioBitrateChanged(value);
+  };
+  onRtmpAuthenticationg = value => {
+    this.props.onRtmpAuthenticationg(value);
+  };
+  onRecordPause = () => {
+    this.props.onRecordPause();
+  };
+  onRecordStarted = value => {
+    this.props.onRecordStarted(value);
+  };
+  onRecordFinished = value => {
+    this.props.onRecordFinished(value);
+  };
+  handleException = value => {
+    this.props.handleException(value);
+  };
   onChangeCamera = () => {
     this.props.onChangeCamera();
   };
@@ -95,9 +197,9 @@ export default class Main extends Component {
   //   console.log("NAtive Text : ", event);
   // };
 
-  handleCallback(event) {
+  _onChange = event => {
     console.log(event.nativeEvent.nativeObject); // "data sent from native"
-  }
+  };
 
   render() {
     return (
@@ -107,7 +209,7 @@ export default class Main extends Component {
             ref={this.setRef}
             style={{ flex: 1, backgroundColor: "red" }}
             streamURL={this.props.streamURL}
-            onChange={() => {}}
+            onChange={this._onChange}
           />
         ) : (
           <CameraComponet
@@ -126,10 +228,6 @@ export default class Main extends Component {
           onPress={this.changeCamera}
         >
           <Image
-            // source={{
-            //   uri:
-            //     'https://pbs.twimg.com/profile_images/486929358120964097/gNLINY67_400x400.png',
-            // }}
             source={require("./Image/changeCamera.png")}
             style={{ width: 50, height: 50 }}
           />
@@ -164,5 +262,20 @@ Main.propsTypes = {
   onPressStart: PropTypes.func,
   onPressStop: PropTypes.func,
   onChangeCamera: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onRtmpConnected: PropTypes.func,
+  onNetworkWeak: PropTypes.func,
+  onNetworkResume: PropTypes.func,
+  onRtmpConnecting: PropTypes.func,
+  onRtmpVideoStreaming: PropTypes.func,
+  onRtmpAudioStreaming: PropTypes.func,
+  onRtmpStopped: PropTypes.func,
+  onRtmpDisconnected: PropTypes.func,
+  onRtmpVideoBitrateChanged: PropTypes.func,
+  onRtmpAudioBitrateChanged: PropTypes.func,
+  onRtmpAuthenticationg: PropTypes.func,
+  onRecordPause: PropTypes.func,
+  onRecordStarted: PropTypes.func,
+  onRecordFinished: PropTypes.func,
+  handleException: PropTypes.func
 };

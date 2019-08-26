@@ -14,9 +14,14 @@ import AVKit
 
 
 
-class VideoComponent: UIView {
+
+class VideoComponent: RCTRootView {
   
-  var onChange: RCTBubblingEventBlock?
+//  override func frame(forAlignmentRect alignmentRect: CGRect) -> CGRect {
+//    return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//  }
+  
+  @objc var onChange: RCTBubblingEventBlock?
   
   
   /// The recorder
@@ -58,8 +63,8 @@ class VideoComponent: UIView {
     self.recordView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     self .addSubview(self.recordView)
     
-    if onChange != nil {
-      onChange!(["nativeObject": "Test"])
+    if self.onChange != nil {
+      self.onChange!(["nativeObject": "Test"])
     }
     
     DispatchQueue.global(qos: .background).async {
@@ -108,6 +113,7 @@ class VideoComponent: UIView {
                     print("*** DEMO *** The stream started with success: %@", success ? "YES" : "NO")
                     if (success) {
                       streamResult(true,"Stream Success")
+                      self.bridge.eventDispatcher()?.sendAppEvent(withName: "onStart", body: "Stream Success")
                       print("*** DEMO *** Success")
                     } else {
                       streamResult(false,error?.message ?? "Stream Error")

@@ -13,8 +13,11 @@ class VideoComponentManager: RCTViewManager {
   
  
 
-  override func view() -> UIView? {
-    return VideoComponent()
+  override func view() -> RCTRootView? {
+    
+    
+    let rootView = VideoComponent(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    return rootView
   }
   
   @objc func startStream(_ node: NSNumber, _ callback: @escaping RCTResponseSenderBlock) {
