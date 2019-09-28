@@ -13,23 +13,16 @@ class VideoComponentManager: RCTViewManager {
   
  
 
-  override func view() -> RCTRootView? {
-    
-    
+  override func view() -> UIView? {
     let rootView = VideoComponent(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    rootView.setUpView(bridge: self.bridge)
     return rootView
   }
   
-  @objc func startStream(_ node: NSNumber, _ callback: @escaping RCTResponseSenderBlock) {
+  @objc func startStream(_ node: NSNumber) {
     DispatchQueue.main.async {
       let view = self.bridge.uiManager.view(forReactTag: node) as! VideoComponent
-      view.startStreaming(resolver: { (res, message) in
-        if(res) {
-          callback([NSNull(), message])
-        }else{
-          callback([message])
-        }
-      })
+      view.startStreaming()
     }
   }
   

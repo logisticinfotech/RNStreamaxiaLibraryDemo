@@ -95,7 +95,7 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
             payload.putString("start_parameter", "Start call");
             context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit("onStart", payload);
-            Toast.makeText(context, "Stream is Started", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Stream Start SuccessFully", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e("start_stream", "Start Stream Error => " + e.getMessage());
         }
@@ -104,6 +104,7 @@ public class CameraView extends RelativeLayout implements EncoderHandler.EncodeL
     public static void change() {
         mPublisher.switchCamera();
         WritableMap payload = Arguments.createMap();
+        payload.putString("change_camera_parameter", "ChangeCamera call");
         context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit("ChangeCamera", payload);
     }

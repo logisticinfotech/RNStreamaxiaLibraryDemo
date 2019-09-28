@@ -10,19 +10,37 @@ import Foundation
 import UIKit
 import StreamaxiaSDK
 import AVKit
-
-
-
-
-
-class VideoComponent: RCTRootView {
-  
-//  override func frame(forAlignmentRect alignmentRect: CGRect) -> CGRect {
-//    return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//
+//class MapBoxView: RCTView {
+//  private var map: MGLMapView?
+//
+//  init() {
+//    super.init()
+//    map = MGLMapView(frame: bounds)
+//    map?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//    addSubview(map)
 //  }
+//}
+
+
+
+class VideoComponent: UIView {
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   
   @objc var onChange: RCTBubblingEventBlock?
   
+  // RCTBridge
+  
+  var view_bridge:RCTBridge!
   
   /// The recorder
   fileprivate var recorder: AXRecorder!
@@ -59,7 +77,13 @@ class VideoComponent: RCTRootView {
   
   // SETUP STREAMAXIA
   
-  func startStreaming(resolver streamResult:@escaping ((Bool,String)->Void)) {
+  func setUpView(bridge:RCTBridge) {
+    view_bridge = bridge
+//    bridge.eventDispatcher()?.sendAppEvent(withName: "onStart", body: "Stream Success")
+  }
+
+  
+  func startStreaming() {
     self.recordView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     self .addSubview(self.recordView)
     
@@ -104,7 +128,7 @@ class VideoComponent: RCTRootView {
                 self.recorder = recorder
                 if (self.recorder == nil) {
                   print("*** DEMO *** The recorder was not properly initialized.")
-                  streamResult(false,"The recorder was not properly initialized.")
+                  self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "handleException", body: "The recorder was not properly initialized.")
                   return;
                 }
                 DispatchQueue.main.async {
@@ -112,18 +136,17 @@ class VideoComponent: RCTRootView {
                   self.recorder.startStreaming(completion: { (success, error) in
                     print("*** DEMO *** The stream started with success: %@", success ? "YES" : "NO")
                     if (success) {
-                      streamResult(true,"Stream Success")
-                      self.bridge.eventDispatcher()?.sendAppEvent(withName: "onStart", body: "Stream Success")
+                      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onStart", body: "Stream Start SuccessFully")
                       print("*** DEMO *** Success")
                     } else {
-                      streamResult(false,error?.message ?? "Stream Error")
+                      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "handleException", body: error?.message ?? "Stream Start Fail")
                       print("*** DEMO *** Error: %@", error ?? "")
                     }
                   })
                 }
               }
             }else{
-              streamResult(false,"Liceance Expire")
+              self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "handleException", body: "License Expire")
             }
             // Printing some debug info about the initialiation settings
             let debugRecorderSettings = AXDebug.init().string(from: self.recorderSettings)
@@ -132,7 +155,7 @@ class VideoComponent: RCTRootView {
             print("*** DEMO **** Did set up the recorder with the following settings:\n%@\n%@", debugRecorderSettings!, debugStreamInfo!)
           }
         }else{
-          streamResult(false,error?.message ?? "Stream Inialize Error")
+          self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "handleException", body: error?.message ?? "Stream Inialize Error")
         }
       }
     }
@@ -142,22 +165,24 @@ class VideoComponent: RCTRootView {
   func stopStreaming() {
     DispatchQueue.main.async {
       if (self.recorder == nil) {
+        self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "handleException", body: "The recorder was not properly initialized.")
         print("*** DEMO *** The recorder was not properly initialized.")
         return;
       }
       self.recorder.stopStreaming()
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onStop", body: "Stop Stream Success")
     }
   }
   
   func changeCamera() {
     DispatchQueue.main.async {
-      
       if(self.recorder.settings.currentCamera == .back) {
         self.recorder.switch(to: .front, withCompletion: { (result, error) in
           if(error != nil) {
             print("Error : ",error!)
           }else{
             print("result : ",result)
+            self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "ChangeCamera", body: "Change Camera To Front")
           }
         })
       }else{
@@ -166,6 +191,7 @@ class VideoComponent: RCTRootView {
             print("Error : ",error!)
           }else{
             print("result : ",result)
+            self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "ChangeCamera", body: "Change Camera To Back")
           }
         })
       }
@@ -208,11 +234,15 @@ class VideoComponent: RCTRootView {
     return settings
   }
   
+  
 }
 
 // MARK: - AXRecorderDelegate -
 
+
 extension VideoComponent: AXRecorderDelegate {
+  
+  
   func recorder(_ recorder: AXRecorder!, didChange state: AXRecorderState) {
     //    print("*** DEMO *** Recorder State Changed to: \(state)")
     
@@ -222,24 +252,31 @@ extension VideoComponent: AXRecorderDelegate {
     case .stopped:
       string = "[Stopped]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderStopped", body: "RecorderStopped")
     case .recording:
       string = "[Recording]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderRecording", body: "RecorderRecording")
     case .starting:
       string = "[Starting...]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderStarting", body: "RecorderStarting")
     case .stopping:
       string = "[Stopping...]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderStopping", body: "RecorderStopping")
     case .collectingExtraData:
       string = "[Get Extra Data]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderGetExtraData", body: "RecorderGetExtraData")
     case .processingExtraData:
       string = "[Proc. Extra Data]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderPutExtraData", body: "RecorderPutExtraData")
     default:
       string = "[Unknown state]"
       print("*** DEMO *** Recorder State Changed to: \(string)")
+      self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderStateChange", body: string)
     }
   }
   
@@ -261,18 +298,27 @@ extension VideoComponent: AXRecorderDelegate {
     case .reachableViaWWAN:
       string = "Internet is reachabale on Cellular"
     }
+    self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "InternetConnectionStatus", body: string)
     print(string)
   }
   
   func recorder(_ recorder: AXRecorder!, didReceive info: AXInfo!) {
     print("*** DEMO *** did receive info: %@", info)
+    var infoDict = [String:Any]()
+    infoDict["message"] = info.message
+    infoDict["infos"] = info.infos
+    infoDict["infoCodes"] = info.infoCodes
+    print(infoDict)
+    self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderInfo", body: infoDict)
   }
   
   func recorder(_ recorder: AXRecorder!, didReceive warning: AXWarning!) {
     print("*** DEMO *** did receive warning: %@", warning)
+    self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderWarning", body: warning.message ?? "")
   }
   
   func recorder(_ recorder: AXRecorder!, didReceiveError error: AXError!) {
     print("*** DEMO *** did receive error: %@", error)
+    self.view_bridge.eventDispatcher()?.sendAppEvent(withName: "onRecorderError", body: error.message ?? "Something Wrong!")
   }
 }

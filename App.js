@@ -11,6 +11,13 @@ export default class App extends Component {
   onChangeCamera = () => {
     console.log("Change Camera Call");
   };
+
+  handleException = value => {
+    console.log("handleException => ", value);
+  };
+
+  // For Android
+
   onRtmpConnected = message => {
     console.log("onRtmpConnect success => ", message);
   };
@@ -56,9 +63,43 @@ export default class App extends Component {
   onRecordFinished = value => {
     console.log("onRecordFinished => ", value);
   };
-  handleException = value => {
-    console.log("handleException => ", value);
+
+  // For IOS
+
+  recorderStopped = value => {
+    console.log("recorderStopped => ", value);
   };
+  recorderRecording = value => {
+    console.log("recorderRecording => ", value);
+  };
+  recorderStarting = value => {
+    console.log("recorderStarting => ", value);
+  };
+  recorderStopping = value => {
+    console.log("recorderStopping => ", value);
+  };
+  recorderGetExtraData = value => {
+    console.log("recorderGetExtraData => ", value);
+  };
+  recorderPutExtraData = value => {
+    console.log("recorderPutExtraData => ", value);
+  };
+  recorderStateChange = value => {
+    console.log("recorderStateChange => ", value);
+  };
+  internetConnectionStatus = value => {
+    console.log("internetConnectionStatus => ", value);
+  };
+  recorderInfo = value => {
+    console.log("recorderInfo => ", value);
+  };
+  recorderWarning = value => {
+    console.log("recorderWarning => ", value);
+  };
+  recorderError = value => {
+    console.log("recorderError => ", value);
+  };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -67,6 +108,8 @@ export default class App extends Component {
           onPressStart={this.onPressStart}
           onPressStop={this.onPressStop}
           onChangeCamera={this.onChangeCamera}
+          handleException={this.handleException}
+          // For Android
           onRtmpConnected={this.onRtmpConnected}
           onNetworkWeak={this.onNetworkWeak}
           onNetworkResume={this.onNetworkResume}
@@ -82,7 +125,18 @@ export default class App extends Component {
           onRecordPause={this.onRecordPause}
           onRecordStarted={this.onRecordStarted}
           onRecordFinished={this.onRecordFinished}
-          handleException={this.handleException}
+          // For iOS
+          onRecorderStopped={this.recorderStopped}
+          onRecorderRecording={this.recorderRecording}
+          onRecorderStarting={this.recorderStarting}
+          onRecorderStopping={this.recorderStopping}
+          onRecorderGetExtraData={this.recorderGetExtraData}
+          onRecorderPutExtraData={this.recorderPutExtraData}
+          onRecorderStateChange={this.recorderStateChange}
+          internetConnectionStatus={this.internetConnectionStatus}
+          onRecorderInfo={this.recorderInfo}
+          onRecorderWarning={this.recorderWarning}
+          onRecorderError={this.recorderError}
         />
       </SafeAreaView>
     );

@@ -34,6 +34,11 @@ export default class Main extends Component {
     DeviceEventEmitter.addListener("ChangeCamera", () => {
       this.onChangeCamera();
     });
+    DeviceEventEmitter.addListener("handleException", value => {
+      this.handleException(value.handleException);
+    });
+
+    // For Android
     DeviceEventEmitter.addListener("onRtmpConnected", message => {
       this.onRtmpConnected(message.onRtmpConnected);
     });
@@ -79,8 +84,40 @@ export default class Main extends Component {
     DeviceEventEmitter.addListener("onRecordFinished", value => {
       this.onRecordFinished(value.onRecordFinished);
     });
-    DeviceEventEmitter.addListener("handleException", value => {
-      this.handleException(value.handleException);
+
+    // For iOS
+    DeviceEventEmitter.addListener("onRecorderStopped", value => {
+      this.onRecorderStopped(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderRecording", value => {
+      this.onRecorderRecording(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderStarting", value => {
+      this.onRecorderStarting(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderStopping", value => {
+      this.onRecorderStopping(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderGetExtraData", value => {
+      this.onRecorderGetExtraData(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderPutExtraData", value => {
+      this.onRecorderPutExtraData(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderStateChange", value => {
+      this.onRecorderStateChange(value);
+    });
+    DeviceEventEmitter.addListener("InternetConnectionStatus", value => {
+      this.internetConnectionStatus(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderInfo", value => {
+      this.onRecorderInfo(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderWarning", value => {
+      this.onRecorderWarning(value);
+    });
+    DeviceEventEmitter.addListener("onRecorderError", value => {
+      this.onRecorderError(value);
     });
   }
   componentDidMount() {}
@@ -98,14 +135,7 @@ export default class Main extends Component {
   startCamera = () => {
     if (Platform.OS === "ios") {
       VideoComponentManager.startStream(
-        ReactNative.findNodeHandle(this.liveStream),
-        (error, message) => {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(message);
-          }
-        }
+        ReactNative.findNodeHandle(this.liveStream)
       ); /// call native module method
     } else {
       VideoComponent.startCamera(); // call native module method
@@ -121,6 +151,48 @@ export default class Main extends Component {
       VideoComponent.stopCamera(); /// call native module method
     }
   };
+
+  handleException = value => {
+    this.props.handleException(value);
+  };
+
+  // For iOS Function
+
+  onRecorderStopped = value => {
+    this.props.onRecorderStopped(value);
+  };
+  onRecorderRecording = value => {
+    this.props.onRecorderRecording(value);
+  };
+  onRecorderStarting = value => {
+    this.props.onRecorderStarting(value);
+  };
+  onRecorderStopping = value => {
+    this.props.onRecorderStopping(value);
+  };
+  onRecorderGetExtraData = value => {
+    this.props.onRecorderGetExtraData(value);
+  };
+  onRecorderPutExtraData = value => {
+    this.props.onRecorderPutExtraData(value);
+  };
+  onRecorderStateChange = value => {
+    this.props.onRecorderStateChange(value);
+  };
+  internetConnectionStatus = value => {
+    this.props.internetConnectionStatus(value);
+  };
+  onRecorderInfo = value => {
+    this.props.onRecorderInfo(value);
+  };
+  onRecorderWarning = value => {
+    this.props.onRecorderWarning(value);
+  };
+  onRecorderError = value => {
+    this.props.onRecorderError(value);
+  };
+
+  // For Android Function
 
   onRtmpVideoStreaming = () => {
     this.props.onRtmpVideoStreaming();
@@ -172,9 +244,6 @@ export default class Main extends Component {
   };
   onRecordFinished = value => {
     this.props.onRecordFinished(value);
-  };
-  handleException = value => {
-    this.props.handleException(value);
   };
   onChangeCamera = () => {
     this.props.onChangeCamera();
@@ -277,5 +346,16 @@ Main.propsTypes = {
   onRecordPause: PropTypes.func,
   onRecordStarted: PropTypes.func,
   onRecordFinished: PropTypes.func,
-  handleException: PropTypes.func
+  handleException: PropTypes.func,
+  onRecorderStopped: PropTypes.func,
+  onRecorderRecording: PropTypes.func,
+  onRecorderStarting: PropTypes.func,
+  onRecorderStopping: PropTypes.func,
+  onRecorderGetExtraData: PropTypes.func,
+  onRecorderPutExtraData: PropTypes.func,
+  internetConnectionStatus: PropTypes.func,
+  onRecorderInfo: PropTypes.func,
+  onRecorderWarning: PropTypes.func,
+  onRecorderError: PropTypes.func,
+  onRecorderStateChange: PropTypes.func
 };
